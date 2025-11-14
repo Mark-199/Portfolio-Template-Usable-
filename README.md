@@ -18,7 +18,7 @@ This is a fully customizable portfolio website built with Django. You can manage
 ### 1. Clone the Repository
 
 ```bash
-git clone [<repository-url>](https://github.com/Mark-199/Portfolio-Template-Usable-.git
+git clone https://github.com/Mark-199/Portfolio-Template-Usable-.git
 cd portfolio
 ```
 
