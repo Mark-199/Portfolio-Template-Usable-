@@ -1,0 +1,593 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<style>
+    /* Hero Section */
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        animation: fadeIn 1s ease-in;
+    }
+
+    .hero-content h1 {
+        font-size: 4.5rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+        color: var(--gray-900);
+        letter-spacing: -2px;
+    }
+
+    .hero-content .highlight {
+        color: var(--maroon);
+    }
+
+    .hero-content p {
+        font-size: 1.5rem;
+        color: var(--gray-600);
+        margin-bottom: 2.5rem;
+    }
+
+    .hero-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .cta-button {
+        display: inline-block;
+        background: var(--maroon);
+        color: white;
+        padding: 1rem 2.5rem;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    .cta-button:hover {
+        background: var(--maroon-dark);
+        transform: scale(1.05);
+    }
+    
+    .cta-button.secondary {
+        background: transparent;
+        color: var(--maroon);
+        border: 2px solid var(--maroon);
+    }
+
+    .cta-button.secondary:hover {
+        background: var(--maroon);
+        color: white;
+    }
+
+    .scroll-indicator {
+        margin-top: 4rem;
+        animation: bounce 2s infinite;
+        color: var(--maroon);
+    }
+
+    /* Sections */
+    section {
+        min-height: 100vh;
+        padding: 8rem 2rem;
+    }
+    
+    .section-container {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+
+    section:nth-child(even) {
+        background: var(--gray-50);
+    }
+
+    h2 {
+        font-size: 3rem;
+        font-weight: 900;
+        color: var(--maroon);
+        margin-bottom: 4rem;
+        text-align: center;
+        letter-spacing: -1px;
+    }
+
+    /* About Section */
+    .about-content {
+        background: white;
+        padding: 3rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+    }
+
+    .about-content p {
+        font-size: 1.125rem;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .project-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .project-image {
+        height: 200px;
+        background-color: var(--maroon-light);
+        background-size: cover;
+        background-position: center;
+    }
+
+    .project-content {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .project-content h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--gray-900);
+    }
+
+    .project-content p {
+        color: var(--gray-600);
+        margin-bottom: 1rem;
+        flex-grow: 1;
+    }
+
+    .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .tag {
+        background: #fee2e2;
+        color: var(--maroon);
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .project-link {
+        color: var(--maroon);
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: auto;
+    }
+
+    .project-link:hover {
+        color: var(--maroon-dark);
+    }
+
+    /* Skills Section */
+    .skills-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .skill {
+        margin-bottom: 2rem;
+    }
+
+    .skill-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    .skill-name {
+        font-weight: 600;
+        color: var(--gray-800);
+    }
+
+    .skill-percent {
+        color: var(--maroon);
+        font-weight: 600;
+    }
+
+    .skill-bar {
+        height: 12px;
+        background: #e5e7eb;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .skill-progress {
+        height: 100%;
+        background: var(--maroon);
+        border-radius: 10px;
+        transition: width 1s ease-out;
+        width: 0;
+    }
+
+    /* Hobbies Section */
+    .hobbies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .hobby-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+        transition: all 0.3s ease;
+    }
+
+    .hobby-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .hobby-emoji {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .hobby-card h3 {
+        color: var(--maroon);
+        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
+    }
+
+    /* Blog Section */
+    .blog-grid {
+        display: grid;
+        gap: 2rem;
+    }
+
+    .blog-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+        transition: all 0.3s ease;
+        border-left: 4px solid var(--maroon);
+    }
+
+    .blog-card:hover {
+        transform: translateX(5px);
+    }
+
+    .blog-date {
+        color: var(--maroon);
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .blog-card h3 {
+        color: var(--gray-900);
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+
+    /* Contact Section */
+    .contact-content {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .contact-content p {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .social-link {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--gray-100);
+        color: var(--maroon);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+        background: var(--maroon);
+        color: white;
+        transform: scale(1.1);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
+    }
+    
+    @media (max-width: 1024px) {
+        .hero-content h1 {
+            font-size: 3rem;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="home" class="hero">
+    <div class="hero-content">
+        <h1>Hi, I'm <span class="highlight">{{ site_settings.name }}</span></h1>
+        <p>Web Developer crafting beautiful digital experiences</p>
+        <div class="hero-buttons">
+            <a href="#projects" class="cta-button">View My Work</a>
+            <button id="install-app-button" class="cta-button secondary" style="display: none;">Install App</button>
+        </div>
+        <div class="scroll-indicator">
+            <span style="font-size: 2rem;">↓</span>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about">
+    <div class="section-container">
+        <h2>About Me</h2>
+        <div class="about-content">
+            {{ about.content|linebreaks }}
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects">
+    <div class="section-container">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card">
+                {% if project.image %}
+                <div class="project-image" style="background-image: url('{{ project.image.url }}');"></div>
+                {% else %}
+                <div class="project-image" style="background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-light) 100%);"></div>
+                {% endif %}
+                <div class="project-content">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatewords:15 }}</p>
+                    <div class="project-tags">
+                        {% for tag in project.tags.all %}
+                        <span class="tag">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'project_detail' project.slug %}" class="project-link">View Project →</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>No projects to display yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills">
+    <div class="section-container">
+        <h2>Skills</h2>
+        <div class="skills-container">
+            {% for skill in skills %}
+            <div class="skill">
+                <div class="skill-header">
+                    <span class="skill-name">{{ skill.name }}</span>
+                    <span class="skill-percent">{{ skill.percentage }}%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-progress" data-width="{{ skill.percentage }}"></div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No skills to display yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Hobbies Section -->
+<section id="hobbies">
+    <div class="section-container">
+        <h2>Hobbies</h2>
+        <div class="hobbies-grid">
+            {% for hobby in hobbies %}
+            <div class="hobby-card">
+                <div class="hobby-emoji">{{ hobby.emoji }}</div>
+                <h3>{{ hobby.name }}</h3>
+                <p>{{ hobby.description }}</p>
+            </div>
+            {% empty %}
+            <p>No hobbies to display yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Blog Section -->
+<section id="blog">
+    <div class="section-container">
+        <h2>Blog</h2>
+        <div class="blog-grid">
+            {% for blog in blogs %}
+            <a href="{% url 'blog_detail' blog.slug %}" class="blog-card-link">
+                <div class="blog-card">
+                    <div class="blog-date">{{ blog.published_date|date:"M Y" }}</div>
+                    <h3>{{ blog.title }}</h3>
+                    <p>{{ blog.content|truncatewords:20 }}</p>
+                </div>
+            </a>
+            {% empty %}
+            <p>No blog posts to display yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+    <div class="section-container">
+        <h2>Get In Touch</h2>
+        <div class="contact-content">
+            <p>I'm always open to new opportunities and collaborations. Let's create something amazing together!</p>
+            <a href="mailto:{{ site_settings.email }}" class="cta-button">Send Me an Email</a>
+            <div class="social-links">
+                <a href="{{ site_settings.github_url }}" class="social-link" target="_blank" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                <a href="{{ site_settings.linkedin_url }}" class="social-link" target="_blank" aria-label="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                <a href="mailto:{{ site_settings.email }}" class="social-link" aria-label="Email">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block script %}
+<script>
+    // Active navigation link on scroll
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+        let current = 'home';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (window.scrollY >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').endsWith('#' + current)) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Animate skills on scroll
+    const skillsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const progressBars = entry.target.querySelectorAll('.skill-progress');
+                progressBars.forEach(bar => {
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width + '%';
+                });
+                skillsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const skillsSection = document.querySelector('#skills');
+    if (skillsSection) {
+        skillsObserver.observe(skillsSection);
+    }
+
+    // PWA Installation
+    let deferredPrompt;
+    const installButton = document.getElementById('install-app-button');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (installButton) {
+            installButton.style.display = 'inline-block';
+        }
+    });
+
+    if (installButton) {
+        installButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                deferredPrompt = null;
+                installButton.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('appinstalled', () => {
+        if (installButton) {
+            installButton.style.display = 'none';
+        }
+        deferredPrompt = null;
+        console.log('PWA was installed');
+    });
+
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            const swContent = `
+                self.addEventListener('install', (e) => { console.log('Service Worker: Installed'); });
+                self.addEventListener('activate', (e) => { console.log('Service Worker: Activated'); return self.clients.claim(); });
+                self.addEventListener('fetch', (e) => { e.respondWith(fetch(e.request).catch(() => caches.match(e.request))); });
+            `;
+            const blob = new Blob([swContent], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            
+            navigator.serviceWorker.register(swUrl)
+                .then(reg => console.log('Service Worker: Registered'))
+                .catch(err => console.log('Service Worker: Error', err));
+        });
+    }
+</script>
+{% endblock %}
