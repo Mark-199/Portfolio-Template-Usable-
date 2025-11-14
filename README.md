@@ -18,8 +18,8 @@ This is a fully customizable portfolio website built with Django. You can manage
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd <repository-name>
+git clone [<repository-url>](https://github.com/Mark-199/Portfolio-Template-Usable-.git
+cd portfolio
 ```
 
 ### 2. Create a Virtual Environment
@@ -80,7 +80,7 @@ The portfolio will be available at `http://127.0.0.1:8000`.
 
 ## Customizing Your Portfolio
 
-To customize your portfolio, navigate to the Django admin panel at `http://127.0.0.1:8000/<your-admin-url>/` and log in with the superuser account you created.
+To customize your portfolio, navigate to the Django admin panel at `http://127.0.0.1:8000/your/admin/url/` and log in with the superuser account you created.
 
 Here's what you can customize:
 
